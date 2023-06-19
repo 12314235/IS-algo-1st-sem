@@ -1,0 +1,37 @@
+using System;
+
+namespace ConsoleApp2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int n = Convert.ToInt32(Console.ReadLine());
+            int[] droids = new int[n];
+            string[] input = Console.ReadLine().Split(" ");
+
+            for(int i = 0; i < n; i++)
+            {
+                droids[i] = Convert.ToInt32(input[i]);
+            }
+
+            int min = droids[0], min2 = droids[1];
+            int processed = 0;
+
+            for(int i = 0; i < n; i++)
+            {
+                if (droids[i] < min)
+                {
+                    min = droids[i];
+                    processed = i;
+                }
+            }
+            for(int i = 0; i < n; i++)
+            {
+                if (droids[i] < min2 & i != processed) min2 = droids[i];
+            }
+
+            Console.WriteLine("{0} {1}", min, min2);
+        }
+    }
+}
