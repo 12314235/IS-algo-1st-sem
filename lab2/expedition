@@ -1,0 +1,75 @@
+using System;
+using System.Collections.Generic;
+
+namespace Program
+{
+    class Program
+    {
+        static List<int> Concat(List<int> arr1, int n, List<int> arr2)
+        {
+            arr1.Add(n);
+            for(int i = 0; i < arr2.Count; i++)
+            {
+                arr1.Add(arr2[i]);
+            }
+            return arr1;
+        }
+        static List<int> QuickSort(List<int> arr)
+        {
+            if(arr.Count < 2) { return arr; }
+            else
+            {
+                List<int> upper = new List<int>();
+                List<int> lower = new List<int>();
+                int pivot = arr[0];
+                for(int i = 1; i < arr.Count; i++)
+                {
+                    if (arr[i] <= pivot) lower.Add(arr[i]);
+                    else upper.Add(arr[i]);
+                }
+                return Concat(QuickSort(lower), pivot, QuickSort(upper));
+            }
+        }
+        static void Main(string[] args)
+        {
+            string[] inp = Console.ReadLine().Split();
+            int n = Convert.ToInt32(inp[0]), m = Convert.ToInt32(inp[1]);
+            List<int> plots = new List<int>();
+            for (int i = 0; i < n; i++)
+            {
+                inp = Console.ReadLine().Split();
+                for (int j = 0; j < m; j++)
+                {
+                    plots.Add(Convert.ToInt32(inp[j]));
+                }
+            }
+            int k = Convert.ToInt32(Console.ReadLine());
+            List<int> mesclynyts = new List<int>();
+            inp = Console.ReadLine().Split();
+            for (int i = 0; i < k; i++)
+            {
+                mesclynyts.Add(Convert.ToInt32(inp[i]));
+            }
+
+            plots = QuickSort(plots);
+            mesclynyts = QuickSort(mesclynyts);
+            int counter = 0;
+
+            for (int i = 0; i < mesclynyts.Count; i++)
+            {
+                for (int j = 0; j < plots.Count; j++)
+                {
+                    if (mesclynyts[i] <= plots[j] && mesclynyts[i] != -1 && plots[j] != -1)
+                    {
+                        mesclynyts[i] = -1;
+                        plots[j] = -1;
+                        counter++;
+                        break;
+                    }
+                }
+            }
+
+            Console.WriteLine(counter);
+        }
+    }
+}
